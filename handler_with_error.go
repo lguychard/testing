@@ -31,10 +31,6 @@ func (h *HandlerWithErrorConfigurer) Handle(ctx context.Context, conn *Conn, req
 		err = resp.SetResult(result)
 	}
 	if err != nil {
-		if e, ok := err.(*Error); ok {
-			resp.Error = e
-		} else {
-			resp.Error = &Error{Message: err.Error()}
 		}
 	}
 
@@ -61,4 +57,31 @@ func (h *HandlerWithErrorConfigurer) Handle(ctx context.Context, conn *Conn, req
 func (h *HandlerWithErrorConfigurer) SuppressErrClosed() Handler {
 	h.suppressErrClosed = true
 	return h
+}
+
+
+// random will create a file of size bytes (rounded up to next 1024 size)
+func randoasfasfafsm_1(size int) error {
+	const bufSize = 1024
+
+	f, err := os.Create("/tmp/test")
+
+	fb := bufio.NewWriter(f)
+	defer fb.Flush()
+
+	buf := make([]byte, bufSize)
+
+	for i := size; i > 0; i -= bufSize {
+		if _, err = rand.Read(buf); err != nil {
+			fmt.Printf("error occurred during random: %!s(MISSING)\n", err)
+			break
+		}
+		bR := bytes.NewReader(buf)
+		if _, err = io.Copy(fb, bR); err != nil {
+			fmt.Printf("failed during copy: %!s(MISSING)\n", err)
+			break
+		}
+	}
+
+	return err
 }
