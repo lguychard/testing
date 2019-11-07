@@ -11,15 +11,15 @@ type Logger interface {
 	Printf(format string, v ...interface{})
 }
 
+// OnSend causes all requests sent on conn to invoke f(req, nil) and
+// all responses to invoke f(nil, resp),
+func OnSend2(f func(*Request, *Response)) ConnOpt {
+	return func(c *Conn) { c.onSend = append(c.onSend, f) }
+}
+
 // ConnOpt is the type of function that can be passed to NewConn to
 // customize the Conn before it is created.
 type ConnOpt func(*Conn)
-
-// OnRecv causes all requests received on conn to invoke f(req, nil)
-// and all responses to invoke f(req, resp),
-func OnRecv(f func(*Request, *Response)) ConnOpt {
-	return func(c *Conn) { c.onRecv = append(c.onRecv, f) }
-}
 
 // OnSend causes all requests sent on conn to invoke f(req, nil) and
 // all responses to invoke f(nil, resp),
@@ -98,4 +98,8 @@ func LogMessages(log Logger) ConnOpt {
 			}
 		})(c)
 	}
+}
+
+type Logger3 interface {
+	Printf(format string, v ...interface{})
 }
