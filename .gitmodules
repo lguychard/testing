@@ -1,0 +1,12 @@
+[submodule "react"]
+	path = react
+	url = https://github.com/facebook/react
+[submodule "go"]
+	path = go
+	url = https://github.com/golang/go
+[submodule "typescript"]
+	path = typescript
+	url = https://github.com/microsoft/typescript
+[submodule "rust"]
+	path = rust
+	url = https://github.com/rust-lang/rust
