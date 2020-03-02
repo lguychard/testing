@@ -17,6 +17,12 @@ func OnSend2(f func(*Request, *Response)) ConnOpt {
 	return func(c *Conn) { c.onSend = append(c.onSend, f) }
 }
 
+// OnSend causes all requests sent on conn to invoke f(req, nil) and
+// all responses to invoke f(nil, resp),
+func OnSend3(f func(*Request, *Response)) ConnOpt {
+	return func(c *Conn) { c.onSend = append(c.onSend, f) }
+}
+
 // ConnOpt is the type of function that can be passed to NewConn to
 // customize the Conn before it is created.
 type ConnOpt func(*Conn)
